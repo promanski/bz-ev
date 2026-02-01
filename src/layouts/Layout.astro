@@ -197,6 +197,33 @@ const structuredData = {
         };
       })();
     </script>
+
+    <!-- Redirect to Polish path if browser prefers Polish and current path isn't already /pl/ -->
+    <script is:inline>
+      (function () {
+        try {
+          // Opt-out: add ?no-redirect=1 to URL to prevent automatic redirect
+          const url = new URL(window.location.href);
+          if (url.searchParams.get("no-redirect") === "1") return;
+
+          const path = window.location.pathname;
+          // If already on Polish path, do nothing
+          if (path.startsWith("/pl")) return;
+
+          const navLang = navigator.language || (navigator.languages && navigator.languages[0]);
+          if (navLang && navLang.startsWith("pl")) {
+            // preserve pathname and search but prefix with /pl
+            const newPath = "/pl" + (path === "/" ? "/" : path);
+            // avoid redirecting if already on the same path
+            if (window.location.pathname !== newPath) {
+              window.location.replace(newPath + window.location.search + window.location.hash);
+            }
+          }
+        } catch {
+          // ignore errors
+        }
+      })();
+    </script>
   </head>
   <body>
     <slot />
