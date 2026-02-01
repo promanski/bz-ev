@@ -3,6 +3,7 @@ import { getLangFromUrl, useTranslations } from "@/utils/i18n";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const homeHref = lang === "pl" ? "/pl/" : "/";
 
 // Remove current url path and remove trailing slash if exists
 const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
@@ -51,7 +52,7 @@ const translateBreadcrumb = (segment: string) => {
     class="font-light [&>li]:inline [&>li:not(:last-child)>a]:hover:opacity-100"
   >
     <li>
-      <a href="/" class="opacity-80">Home</a>
+      <a href={homeHref} class="opacity-80">{t("nav.home")}</a>
       <span aria-hidden="true" class="opacity-80">&raquo;</span>
     </li>
     {

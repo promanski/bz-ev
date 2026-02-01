@@ -7,7 +7,7 @@ export const defaultLang = "en";
 
 export const ui = {
     pl: {
-        "nav.home": "Główna",
+    "nav.home": "Strona główna",
         "nav.about": "O blogu",
         "nav.search": "Szukaj",
         "nav.posts": "Wpisy",
@@ -27,7 +27,8 @@ export const ui = {
         "footer.copyright": "Wszelkie prawa zastrzeżone.",
         "footer.disclaimer": "Niniejszy blog jest niezależnym serwisem informacyjnym i nie jest w żaden sposób powiązany, autoryzowany ani sponsorowany przez Toyota Motor Corporation, do której należą wszelkie zastrzeżone nazwy i znaki towarowe.",
         "back.goBack": "Wróć",
-        "404.goBackHome": "Wróć na stronę główną",
+    "404.goBackHome": "Wróć na stronę główną",
+    "404.title": "Strona nie znaleziona",
         "share.title": "Udostępnij wpis na:",
     },
     en: {
@@ -51,7 +52,8 @@ export const ui = {
         "footer.copyright": "All rights reserved.",
         "footer.disclaimer": "This blog is an independent information service and is not affiliated with, authorized, or sponsored by Toyota Motor Corporation, which owns all registered names and trademarks.",
         "back.goBack": "Go back",
-        "404.goBackHome": "Go back home",
+    "404.goBackHome": "Go back home",
+    "404.title": "Page Not Found",
         "share.title": "Share this post on:",
     },
 } as const;

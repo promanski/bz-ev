@@ -17,7 +17,13 @@ import { SITE } from "@/config";
     <div class="mb-14 flex flex-col items-center justify-center">
       <h1 class="text-9xl font-bold text-accent">404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p class="mt-4 text-2xl sm:text-3xl">Page Not Found</p>
+      {
+        (() => {
+          const lang = getLangFromUrl(Astro.url);
+          const t = useTranslations(lang);
+          return <p class="mt-4 text-2xl sm:text-3xl">{t("404.title")}</p>;
+        })()
+      }
       {
         (() => {
           const lang = getLangFromUrl(Astro.url);
