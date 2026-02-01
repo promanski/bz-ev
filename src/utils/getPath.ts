@@ -36,5 +36,10 @@ export function getPath(
   // Determine base path
   const basePath = locale === "pl" ? "/pl" : "";
 
-  return [basePath, ...validSegments].join("/");
+  // If no valid segments (filePath missing or filtered out), fall back to slugified id
+  const segmentsToJoin = validSegments.length > 0 ? validSegments : [slugifyStr(id.replace(/\.mdx?$/, ""))];
+
+  // Join and ensure leading slash
+  const joined = [basePath, ...segmentsToJoin].join("/");
+  return joined.startsWith("/") ? joined : `/${joined}`;
 }
