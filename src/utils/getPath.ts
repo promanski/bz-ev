@@ -13,24 +13,28 @@ export function getPath(
   filePath: string | undefined,
   includeBase = true
 ) {
-  const pathSegments = filePath
-    ?.replace(BLOG_PATH, "")
-    .split("/")
-    .filter(path => path !== "") // remove empty string in the segments ["", "other-path"] <- empty string will be removed
-    .filter(path => !path.startsWith("_")) // exclude directories start with underscore "_"
-    .slice(0, -1) // remove the last segment_ file name_ since it's unnecessary
-    .map(segment => slugifyStr(segment)); // slugify each segment path
+  /*
+   * Logic to handle i18n structure:
+   * - english (default): src/content/blog/en/post.md -> /post
+   * - polish: src/content/blog/pl/post.md -> /pl/post
+   */
+  const segments = filePath?.replace(BLOG_PATH, "").split("/").filter(Boolean) || [];
 
-  const basePath = includeBase ? "/posts" : "";
+  // Detect locale (first segment)
+  const locale = segments[0] === "en" || segments[0] === "pl" ? segments[0] : "en";
 
-  // Making sure `id` does not contain the directory
-  const blogId = id.split("/");
-  const slug = blogId.length > 0 ? blogId.slice(-1) : blogId;
+  // Remove locale and underscores from segments
+  const validSegments = segments
+    .filter(path => !path.startsWith("_") && path !== "pl" && path !== "en")
+    .map(segment => slugifyStr(segment).replace(/\.mdx?$/, ""));
 
-  // If not inside the sub-dir, simply return the file path
-  if (!pathSegments || pathSegments.length < 1) {
-    return [basePath, slug].join("/");
+  // If we just want the slug (no base), return joined segments
+  if (!includeBase) {
+    return validSegments.length > 0 ? validSegments.join("/") : slugifyStr(id.replace(/\.mdx?$/, ""));
   }
 
-  return [basePath, ...pathSegments, slug].join("/");
+  // Determine base path
+  const basePath = locale === "pl" ? "/pl" : "";
+
+  return [basePath, ...validSegments].join("/");
 }

@@ -15,18 +15,22 @@ type Props = {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
+  activeLang?: "pl" | "en";
+  alternateUrl?: string;
 };
 
 const {
   title = SITE.title,
   author = SITE.author,
-  profile = SITE.profile,
+  profile,
   description = SITE.desc,
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
+  activeLang,
+  alternateUrl,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
@@ -51,7 +55,7 @@ const structuredData = {
 <!doctype html>
 <html
   dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
+  lang={activeLang || SITE.lang || "pl"}
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
@@ -60,6 +64,16 @@ const structuredData = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
+
+    {
+      alternateUrl && (
+        <link
+          rel="alternate"
+          hreflang={activeLang === "pl" ? "en" : "pl"}
+          href={new URL(alternateUrl, Astro.site)}
+        />
+      )
+    }
 
     <!-- Load Font -->
     <Font

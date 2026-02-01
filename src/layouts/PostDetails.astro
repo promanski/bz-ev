@@ -56,6 +56,20 @@ const ogImage = ogImageUrl
   ? new URL(ogImageUrl, Astro.url.origin).href
   : undefined;
 
+// Determine language and alternate post
+const currentLang = (post.id.startsWith("en/") ? "en" : "pl") as "en" | "pl";
+const alternatePost = posts.find(p => {
+  const pLang = p.id.startsWith("en/") ? "en" : "pl";
+  if (pLang === currentLang) return false;
+  // Compare ID suffix (everything after lang prefix)
+  const pSuffix = p.id.substring(pLang.length + 1);
+  const currentSuffix = post.id.substring(currentLang.length + 1);
+  return pSuffix === currentSuffix;
+});
+const alternateUrl = alternatePost
+  ? getPath(alternatePost.id, alternatePost.filePath)
+  : undefined;
+
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
   author,
@@ -65,6 +79,8 @@ const layoutProps = {
   canonicalURL,
   ogImage,
   scrollSmooth: true,
+  activeLang: currentLang,
+  alternateUrl,
 };
 
 /* ========== Prev/Next Posts ========== */
@@ -83,7 +99,10 @@ const nextPost =
 ---
 
 <Layout {...layoutProps}>
-  <Header />
+  <Header
+    activeLang={layoutProps.activeLang}
+    alternateUrl={layoutProps.alternateUrl}
+  />
   <BackButton />
   <main
     id="main-content"
@@ -118,9 +137,15 @@ const nextPost =
 
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
-    <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
-    </ul>
+    {
+      SITE.showTags && (
+        <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
+          {tags.map(tag => (
+            <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
+          ))}
+        </ul>
+      )
+    }
 
     <BackToTopButton />
 

@@ -1,5 +1,5 @@
 ---
-layout: ../layouts/AboutLayout.astro
+layout: ../../layouts/AboutLayout.astro
 title: "About"
 ---
 
@@ -19,6 +19,4 @@ What you'll find here:
 
 ## Why the bZ4X?
 
-Not because it's the obvious choice. Toyota's approach to EVs is unconventional, and the bZ4X is a car that raises questions — about design decisions, charging behavior, and long-term strategy. This site is about testing those things in practice, not defending them.
-
-Feel free to look around, leave a comment, or come back when you're curious how things are going.
+bZ4X appeared in my life partly out of sentiment, partly out of curiosity. Good memories of the Corolla played a role, so now it was time to check if the electric Toyota is still the "same" Toyota I know and like, or maybe a completely new story.

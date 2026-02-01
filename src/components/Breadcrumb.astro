@@ -1,15 +1,27 @@
 ---
+import { getLangFromUrl, useTranslations } from "@/utils/i18n";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 // Remove current url path and remove trailing slash if exists
 const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
 
 // Get url array from path
 // eg: /tags/tailwindcss => ['tags', 'tailwindcss']
-const breadcrumbList = currentUrlPath.split("/").slice(1);
+const breadcrumbList = currentUrlPath
+  .split("/")
+  .slice(1)
+  .filter(segment => segment !== "pl" && segment !== "en");
 
 // if breadcrumb is Home > Posts > 1 <etc>
 // replace Posts with Posts (page number)
 if (breadcrumbList[0] === "posts") {
-  breadcrumbList.splice(0, 2, `Posts (page ${breadcrumbList[1] || 1})`);
+  breadcrumbList.splice(
+    0,
+    2,
+    `${t("breadcrumb.posts")} (${t("breadcrumb.page")} ${breadcrumbList[1] || 1})`
+  );
 }
 
 // if breadcrumb is Home > Tags > [tag] > [page] <etc>
@@ -18,9 +30,20 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
   breadcrumbList.splice(
     1,
     3,
-    `${breadcrumbList[1]} ${Number(breadcrumbList[2]) === 1 ? "" : "(page " + breadcrumbList[2] + ")"}`
+    `${breadcrumbList[1]} ${Number(breadcrumbList[2]) === 1 ? "" : `(${t("breadcrumb.page")} ${breadcrumbList[2]})`}`
   );
 }
+
+// Translate common breadcrumb segments
+const translateBreadcrumb = (segment: string) => {
+  const translations: Record<string, string> = {
+    about: t("breadcrumb.about"),
+    search: t("breadcrumb.search"),
+    tags: t("breadcrumb.tags"),
+    archives: t("breadcrumb.archives"),
+  };
+  return translations[segment] || segment;
+};
 ---
 
 <nav class="app-layout mt-8 mb-1" aria-label="breadcrumb">
@@ -40,13 +63,13 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
               aria-current="page"
             >
               {/* make the last part lowercase in Home > Tags > some-tag */}
-              {decodeURIComponent(breadcrumb)}
+              {translateBreadcrumb(decodeURIComponent(breadcrumb))}
             </span>
           </li>
         ) : (
           <li>
             <a href={`/${breadcrumb}/`} class="capitalize opacity-70">
-              {breadcrumb}
+              {translateBreadcrumb(breadcrumb)}
             </a>
             <span aria-hidden="true">&raquo;</span>
           </li>

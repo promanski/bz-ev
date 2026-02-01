@@ -1,0 +1,51 @@
+export const languages = {
+    pl: "Polski",
+    en: "English",
+};
+
+export const defaultLang = "en";
+
+export const ui = {
+    pl: {
+        "nav.home": "Główna",
+        "nav.about": "O mnie",
+        "nav.search": "Szukaj",
+        "nav.posts": "Wpisy",
+        "nav.tags": "Tagi",
+        "nav.archives": "Archiwum",
+        "post.readMore": "Czytaj więcej",
+        "post.postedOn": "Opublikowano",
+        "post.updatedOn": "Zaktualizowano",
+        "page.posts.title": "Wpisy",
+        "page.posts.desc": "Wszystkie artykuły, które opublikowałem.",
+        "breadcrumb.posts": "Wpisy",
+        "breadcrumb.page": "strona",
+        "breadcrumb.about": "o-mnie",
+        "breadcrumb.search": "szukaj",
+        "breadcrumb.tags": "tagi",
+        "breadcrumb.archives": "archiwum",
+        "footer.copyright": "Wszelkie prawa zastrzeżone.",
+        "footer.disclaimer": "Niniejszy blog jest niezależnym serwisem informacyjnym i nie jest w żaden sposób powiązany, autoryzowany ani sponsorowany przez Toyota Motor Corporation, do której należą wszelkie zastrzeżone nazwy i znaki towarowe.",
+    },
+    en: {
+        "nav.home": "Home",
+        "nav.about": "About",
+        "nav.search": "Search",
+        "nav.posts": "Posts",
+        "nav.tags": "Tags",
+        "nav.archives": "Archives",
+        "post.readMore": "Read more",
+        "post.postedOn": "Posted on",
+        "post.updatedOn": "Updated on",
+        "page.posts.title": "Posts",
+        "page.posts.desc": "All the articles I've posted.",
+        "breadcrumb.posts": "Posts",
+        "breadcrumb.page": "page",
+        "breadcrumb.about": "about",
+        "breadcrumb.search": "search",
+        "breadcrumb.tags": "tags",
+        "breadcrumb.archives": "archives",
+        "footer.copyright": "All rights reserved.",
+        "footer.disclaimer": "This blog is an independent information service and is not affiliated with, authorized, or sponsored by Toyota Motor Corporation, which owns all registered names and trademarks.",
+    },
+} as const;

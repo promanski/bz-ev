@@ -17,7 +17,7 @@ const t = useTranslations(lang);
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection(
     "blog",
-    ({ data, id }) => !data.draft && id.startsWith("en/")
+    ({ data, id }) => !data.draft && id.startsWith("pl/")
   );
   return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
 }) satisfies GetStaticPaths;
