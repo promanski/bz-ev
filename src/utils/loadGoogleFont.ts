@@ -36,6 +36,7 @@ async function loadGoogleFonts(
 > {
   const fontsConfig = [
     {
+      // Keep existing monospace font used for code blocks in OG images
       name: "IBM Plex Mono",
       font: "IBM+Plex+Mono",
       weight: 400,
@@ -46,6 +47,19 @@ async function loadGoogleFonts(
       font: "IBM+Plex+Mono",
       weight: 700,
       style: "bold",
+    },
+    {
+      // Add Plus Jakarta Sans for headings / body text in OG images
+      name: "Plus Jakarta Sans",
+      font: "Plus+Jakarta+Sans",
+      weight: 700,
+      style: "normal",
+    },
+    {
+      name: "Plus Jakarta Sans",
+      font: "Plus+Jakarta+Sans",
+      weight: 400,
+      style: "normal",
     },
   ];
 

@@ -81,6 +81,23 @@ const structuredData = {
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
     />
 
+    <!-- Explicitly request Plus Jakarta Sans from Google Fonts as a fallback/preload
+         This forces the browser to load the new font family immediately while
+         the Astro Fonts integration is initializing. -->
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- General Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />

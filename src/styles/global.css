@@ -5,6 +5,9 @@
 
 :root,
 html[data-theme="light"] {
+  /* Primary UI font used across the site. Kept under the same variable
+     name used by the Astro Font integration so other code stays unchanged. */
+  --font-google-sans-code: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   --background: #fdfdfd;
   --foreground: #282728;
   --accent: #006cac;
@@ -13,6 +16,7 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
+  --font-google-sans-code: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   --background: #212737;
   --foreground: #eaedf3;
   --accent: #ff6b01;

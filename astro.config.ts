@@ -68,10 +68,13 @@ export default defineConfig({
     preserveScriptOrder: true,
     fonts: [
       {
-        name: "Google Sans Code",
+        // Use Plus Jakarta Sans from Google Fonts as the site's primary font.
+        name: "Plus Jakarta Sans",
+        // Keep the existing css variable so other parts of the project don't need changes.
         cssVariable: "--font-google-sans-code",
         provider: fontProviders.google(),
-        fallbacks: ["monospace"],
+        // sensible fallbacks for a sans-serif text font
+        fallbacks: ["ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", ""],
         weights: [300, 400, 500, 600, 700],
         styles: ["normal", "italic"],
       },

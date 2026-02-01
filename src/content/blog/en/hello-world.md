@@ -1,5 +1,5 @@
 ---
-title: "BLog started"
+title: "Blog started"
 author: "Piotr"
 pubDatetime: 2026-01-30T20:55:00Z
 description: "Welcome to my new blog about the bZ4X and EV technology."
