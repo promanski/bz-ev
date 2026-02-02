@@ -1,14 +1,17 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { getCollection } from "astro:content";
 import PostDetails from "@/layouts/PostDetails.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { getPath } from "@/utils/getPath";
 
 export async function getStaticPaths() {
-  const posts = await getCollection(
-    "blog",
-    ({ data, id }) => !data.draft && id.startsWith("en/")
-  );
+  // Only include posts that are not inside language subfolders (en/ or pl/)
+  const posts = await getCollection("blog", ({ data, id }) => {
+    if (data.draft) return false;
+    // Exclude locale-specific posts which are handled by `/en/[...slug]` and `/pl/[...slug]`
+    if (id.startsWith("en/") || id.startsWith("pl/")) return false;
+    return true;
+  });
   const postResult = posts.map(post => ({
     params: { slug: getPath(post.id, post.filePath, false) },
     props: { post },
