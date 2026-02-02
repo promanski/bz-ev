@@ -1,8 +1,9 @@
 export const SITE = {
   website: "https://bz-ev.com/", // replace this with your deployed domain
   author: "Piotr",
-  desc: "Pierwszy elektryk Toyoty okiem zwykłego kierowcy – realne zużycie energii, codzienne ładowanie i jak to się spina ze smart home",
-  title: "bZ-EV blog",
+  desc: "A daily driver’s take on Toyota’s first full EV, bz4x — real-world energy use, everyday charging, and smart home integrations ",
+  // More SEO-friendly site title — includes keyword 'Toyota bZ4X' and 'EV'
+  title: "bZ-EV — Toyota bZ4X practical EV blog",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,

@@ -38,7 +38,7 @@ const socialImageURL = new URL(ogImage, Astro.url);
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  headline: `${title}`,
+  headline: `${(typeof title === 'string' && title && !title.includes(SITE.title)) ? `${title} | ${SITE.title}` : title}`,
   image: `${socialImageURL}`,
   datePublished: `${pubDatetime?.toISOString()}`,
   ...(modDatetime && { dateModified: modDatetime.toISOString() }),
@@ -99,14 +99,40 @@ const structuredData = {
     />
 
     <!-- General Meta Tags -->
-    <title>{title}</title>
-    <meta name="title" content={title} />
+      {
+        // Build a full title: if a specific page title was provided and it doesn't
+        // already contain the site title, append `| SITE.title` for SEO.
+      }
+      {(() => {
+        const fullTitle = typeof title === 'string' && title && !title.includes(SITE.title)
+          ? `${title} | ${SITE.title}`
+          : title;
+        return (
+          <>
+            <title>{fullTitle}</title>
+            <meta name="title" content={fullTitle} />
+          </>
+        );
+      })()}
     <meta name="description" content={description} />
     <meta name="author" content={author} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content={`${(typeof title === 'string' ? title : '')}, ${description.split(/\s|,|\.|\/+/).slice(0,12).join(', ')}`} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <!-- Additional Open Graph / SEO -->
+  <meta property="og:site_name" content={SITE.title} />
+  <meta property="og:type" content={pubDatetime ? 'article' : 'website'} />
+  <meta property="og:locale" content={activeLang === 'pl' ? 'pl_PL' : 'en_US'} />
+  <meta name="twitter:creator" content={SITE.author} />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:title" content={title} />
+    {(() => {
+      const fullTitle = typeof title === 'string' && title && !title.includes(SITE.title)
+        ? `${title} | ${SITE.title}`
+        : title;
+      return <meta property="og:title" content={fullTitle} />;
+    })()}
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
@@ -132,16 +158,21 @@ const structuredData = {
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
+      {(() => {
+        const fullTitle = typeof title === 'string' && title && !title.includes(SITE.title)
+          ? `${title} | ${SITE.title}`
+          : title;
+        return <meta property="twitter:title" content={fullTitle} />;
+      })()}
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Google JSON-LD Structured data -->
     <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(structuredData)}
-    />
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify({ ...structuredData, headline: (typeof title === 'string' && title && !title.includes(SITE.title)) ? `${title} | ${SITE.title}` : title })}
+      />
 
     <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
